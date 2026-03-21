@@ -1,9 +1,9 @@
 import { useRouter } from 'expo-router';
-import { useState } from 'react'; // Added useState
+import { useState } from 'react';
 import {
   ActivityIndicator,
   Image,
-  Modal, // Added Modal
+  Modal,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -22,7 +22,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const [logoutVisible, setLogoutVisible] = useState(false); // State for Logout Modal
+  const [logoutVisible, setLogoutVisible] = useState(false);
 
   let [fontsLoaded] = useFonts({
     Lexend_400Regular,
@@ -84,7 +84,6 @@ export default function HomeScreen() {
           />
         </View>
 
-        {/* Updated: Triggers modal instead of direct logout */}
         <TouchableOpacity style={styles.logoutButton} onPress={() => setLogoutVisible(true)}>
           <Ionicons name="log-out-outline" size={35} color="#fff" />
           <Text style={styles.logoutText}>Log Out</Text>
@@ -112,12 +111,18 @@ export default function HomeScreen() {
             <Text style={styles.actionButtonText}>Help</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity 
+            style={styles.actionButton}
+            onPress={() => router.push('/about')}
+          >
             <Ionicons name="information-circle-outline" size={40} color="#fff" />
             <Text style={styles.actionButtonText}>About</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity 
+            style={styles.actionButton}
+            onPress={() => router.push('/settings')}
+          >
             <Ionicons name="settings-outline" size={40} color="#fff" />
             <Text style={styles.actionButtonText}>Settings</Text>
           </TouchableOpacity>
