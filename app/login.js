@@ -85,15 +85,15 @@ export default function LoginScreen() {
         style={styles.keyboardView}
       >
         <View style={[styles.loginCard, isTablet && styles.tabletCard]}>
-          <View style={styles.headerRow}>
+          <View style={styles.logoRow}>
             <Image 
               source={require('../assets/images/company-logo.png')} 
-              style={styles.logoImage}
+              style={styles.logoMain}
               resizeMode="contain" 
             />
             <Image 
               source={require('../assets/images/sms-logo.png')} 
-              style={styles.logoImage}
+              style={styles.logoMain}
               resizeMode="contain"
             />
           </View>
@@ -101,9 +101,9 @@ export default function LoginScreen() {
           <Text style={styles.instructionText}>Please enter your credentials</Text>
 
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>Username</Text>
+            <Text style={styles.inputLabel}>Username</Text>
             <TextInput
-              style={[styles.input, usernameError && styles.inputError]}
+              style={[styles.inputField, usernameError && styles.inputFieldError]}
               value={username}
               onChangeText={(text) => {
                 setUsername(text);
@@ -115,10 +115,14 @@ export default function LoginScreen() {
           </View>
 
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>Password</Text>
+            <Text style={styles.inputLabel}>Password</Text>
             <View style={styles.passwordWrapper}>
               <TextInput
-                style={[styles.input, { paddingRight: 60 }, passwordError && styles.inputError]}
+                style={[
+                  styles.inputField, 
+                  { paddingRight: 60 }, 
+                  passwordError && styles.inputFieldError
+                ]}
                 value={password}
                 onChangeText={(text) => {
                   setPassword(text);
@@ -128,7 +132,7 @@ export default function LoginScreen() {
                 placeholderTextColor="#94a3b8"
               />
               <TouchableOpacity 
-                style={styles.eyeIcon} 
+                style={styles.passwordEye} 
                 onPress={() => setShowPassword(!showPassword)}
                 activeOpacity={0.7}
               >
@@ -142,15 +146,15 @@ export default function LoginScreen() {
           </View>
 
           <TouchableOpacity 
-            style={styles.loginButton} 
+            style={styles.buttonSubmit} 
             activeOpacity={0.8}
             onPress={handleLogin}
           >
-            <Text style={styles.buttonText}>Log In</Text>
+            <Text style={styles.buttonSubmitText}>Log In</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => router.push('/forgot-password')}>
-            <Text style={styles.forgotText}>Forgot Password?</Text>
+            <Text style={styles.linkText}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -159,12 +163,27 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
+  // Global & Layout
   container: { flex: 1, backgroundColor: '#202020' },
   loadingContainer: { flex: 1, backgroundColor: '#202020', justifyContent: 'center', alignItems: 'center' },
   keyboardView: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 },
-  loginCard: { backgroundColor: '#2a2a2a', borderRadius: 30, padding: 40, width: '100%', maxWidth: 500, alignItems: 'center', borderWidth: 1, borderColor: '#333', elevation: 10 },
+  
+  // Card Layout
+  loginCard: { 
+    backgroundColor: '#2a2a2a', 
+    borderRadius: 30, 
+    padding: 40, 
+    width: '100%', 
+    maxWidth: 500, 
+    alignItems: 'center', 
+    borderWidth: 1, 
+    borderColor: '#333', 
+    elevation: 10 
+  },
   tabletCard: { maxWidth: 700, padding: 60 },
-  headerRow: { 
+  
+  // Logos & Branding
+  logoRow: { 
     flexDirection: 'row', 
     justifyContent: 'center', 
     gap: 80, 
@@ -172,18 +191,62 @@ const styles = StyleSheet.create({
     width: '100%', 
     marginBottom: 30 
   },
-  logoImage: { 
-    width: 240, // Slightly reduced width to prevent crowding
+  logoMain: { 
+    width: 240, 
     height: 140 
   },
-  instructionText: { color: '#fff', fontSize: 25, fontFamily: 'Lexend_400Regular', marginTop: 10, marginBottom: 20, textAlign: 'center' },
+  instructionText: { 
+    color: '#fff', 
+    fontSize: 25, 
+    fontFamily: 'Lexend_400Regular', 
+    marginTop: 10, 
+    marginBottom: 20, 
+    textAlign: 'center' 
+  },
+
+  // Form Controls
   inputGroup: { width: '100%', marginBottom: 25 },
-  label: { color: '#fff', fontSize: 30, fontFamily: 'Lexend_700Bold', marginBottom: 10 },
+  inputLabel: { color: '#fff', fontSize: 30, fontFamily: 'Lexend_700Bold', marginBottom: 10 },
+  inputField: { 
+    backgroundColor: '#fff', 
+    width: '100%', 
+    height: 70, 
+    borderRadius: 15, 
+    paddingHorizontal: 20, 
+    fontSize: 24, 
+    color: '#000', 
+    fontFamily: 'Lexend_400Regular', 
+    borderWidth: 2, 
+    borderColor: 'transparent' 
+  },
+  inputFieldError: { backgroundColor: '#FDAFAF', borderColor: '#e63946' },
+  
+  // Password Specific
   passwordWrapper: { width: '100%', position: 'relative' },
-  input: { backgroundColor: '#fff', width: '100%', height: 70, borderRadius: 15, paddingHorizontal: 20, fontSize: 24, color: '#000', fontFamily: 'Lexend_400Regular', borderWidth: 2, borderColor: 'transparent' },
-  inputError: { backgroundColor: '#FDAFAF', borderColor: '#e63946' },
-  eyeIcon: { position: 'absolute', right: 20, height: '100%', justifyContent: 'center', alignItems: 'center' },
-  loginButton: { backgroundColor: '#1DA1D9', width: '70%', paddingVertical: 18, borderRadius: 15, alignItems: 'center', marginTop: 20, marginBottom: 30 },
-  buttonText: { color: '#fff', fontSize: 30, fontFamily: 'Lexend_700Bold' },
-  forgotText: { color: '#fff', fontSize: 25, fontFamily: 'Lexend_400Regular', opacity: 0.9, textDecorationLine: 'underline' },
+  passwordEye: { 
+    position: 'absolute', 
+    right: 20, 
+    height: '100%', 
+    justifyContent: 'center', 
+    alignItems: 'center' 
+  },
+
+  // Buttons & Links
+  buttonSubmit: { 
+    backgroundColor: '#1DA1D9', 
+    width: '70%', 
+    paddingVertical: 18, 
+    borderRadius: 15, 
+    alignItems: 'center', 
+    marginTop: 20, 
+    marginBottom: 30 
+  },
+  buttonSubmitText: { color: '#fff', fontSize: 30, fontFamily: 'Lexend_700Bold' },
+  linkText: { 
+    color: '#fff', 
+    fontSize: 25, 
+    fontFamily: 'Lexend_400Regular', 
+    opacity: 0.9, 
+    textDecorationLine: 'underline' 
+  },
 });
